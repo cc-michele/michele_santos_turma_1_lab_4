@@ -1,51 +1,66 @@
 package lab04;
 
-//Código gerado pelos monitores da disciplina e revisado pelos professores
-
-
-import static org.junit.Assert.*;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import lab04.Musica;
 
 public class MusicaTest {
 
+	private Musica musica;
+	private String tituloMusica = "Formation";
+	private int duracaoEsperada = 5;
+	private String generoEsperado = "Pop";	
+	
+	@Before
+	public void setup() throws Exception{
+		this.musica = new Musica(tituloMusica,5,"Pop");
+	}
+	
 	@Test
-	public void testMusica() {
-		Musica chandelier = new Musica("Chandelier", 3, "Pop");
-		Musica elasticHeart = new Musica("Elastic Heart", 3, "Pop");
-		Musica cellophane = new Musica("Cellophane", 4, "Pop");
-
-		assertEquals("Chandelier", chandelier.getTitulo());
-		assertEquals(3, chandelier.getDuracao());
-		assertEquals("Pop", chandelier.getGenero());
-
-		assertEquals("Elastic Heart", elasticHeart.getTitulo());
-		assertEquals(3, elasticHeart.getDuracao());
-		assertEquals("Pop", elasticHeart.getGenero());
-
-		assertEquals("Cellophane", cellophane.getTitulo());
-		assertEquals(4, cellophane.getDuracao());
-		assertEquals("Pop", cellophane.getGenero());
-
-		Musica chandelierRemix = new Musica("Chandelier", 3, "Pop");
-		assertTrue(chandelier.equals(chandelierRemix));
-		assertFalse(chandelier.equals(cellophane));
+	public void testGetTitulo(){
+		Assert.assertEquals(tituloMusica, musica.getTitulo());
 	}
 
-
-
 	@Test
-	public void testEquals() {
-		Musica chandelier = new Musica("Chandelier", 3, "Pop");
-		Musica elasticHeart = new Musica("Elastic Heart", 3, "Pop");
-		Musica cellophane = new Musica("Cellophane", 4, "Pop");
-		
+	public void testGetGenero(){
+		Assert.assertEquals(generoEsperado, musica.getGenero());
+	}
+	
+	@Test
+	public void testGetDuracao(){
+		Assert.assertEquals(duracaoEsperada, musica.getDuracao());
+	}
+	
+	//note abaixo como eh o bom uso de exceptions em testes
+	@Test(expected = Exception.class)
+	public void testTituloVazio() throws Exception{
+		musica = new Musica("",5,"Pop");
+	}
+	
+	@Test(expected = Exception.class)
+	public void testTituloNull() throws Exception{
+		musica = new Musica(null,5,"Pop");
+	}
+	
+	@Test(expected = Exception.class)
+	public void testGeneroVazio() throws Exception{
+		musica = new Musica("Fly me to the moon.",5,"");
+	}
+	
+	@Test(expected = Exception.class)
+	public void testGeneroNull() throws Exception{
+		musica = new Musica("Fly me to the moon.",5,null);
+	}
+	
+	@Test(expected = Exception.class)
+	public void testDuracaoInvalida() throws Exception{
+		musica = new Musica("Fly me to the moon.",-5,"Forro");
+	}
 
-		assertTrue(chandelier.equals(new Musica("Chandelier", 3, "Pop")));
-		assertTrue(chandelier.equals(new Musica("Chandelier", 3, "Pop-rock")));
-		assertNotEquals(elasticHeart, chandelier);
-		assertNotEquals(elasticHeart, cellophane);
-		
+	@Test(expected = Exception.class)
+	public void testDuracaoZero() throws Exception{
+		musica = new Musica("Fly me to the moon.",0,"Forro");
 	}
 }
