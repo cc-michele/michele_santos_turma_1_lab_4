@@ -1,7 +1,5 @@
 package lab04;
 
-
-
 public class Musica {
 
 	String titulo;
@@ -45,6 +43,19 @@ public class Musica {
 		}
 	}
 
+	/*
+	 * @Override public int hashCode() { final int prime = 31; int result = 1;
+	 * result = prime * result + duracao; result = prime * result + ((titulo ==
+	 * null) ? 0 : titulo.hashCode()); return result; }
+	 * 
+	 * @Override public boolean equals(Object obj) { if (this == obj) return
+	 * true; if (obj == null) return false; if (getClass() != obj.getClass())
+	 * return false; Musica other = (Musica) obj; if (duracao != other.duracao)
+	 * return false; if (titulo == null) { if (other.titulo != null) return
+	 * false; } else if (!titulo.equals(other.titulo)) return false; return
+	 * true; }
+	 */
+
 	@Override
 	public boolean equals(Object obj) {
 
@@ -52,7 +63,7 @@ public class Musica {
 			return false;
 
 		Musica musica = (Musica) obj;
-		return titulo.equals(musica.getTitulo()) && duracao == (musica.getDuracao());
+		return titulo.equals(musica.getTitulo()) && duracao == (musica.getDuracao()) && genero.equals(musica.getGenero());
 	}
 
 }

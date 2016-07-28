@@ -5,8 +5,6 @@ import java.util.Iterator;
 
 public class Album {
 
-
-
 	String artista;
 	String titulo;
 	int anoLancamento;
@@ -14,15 +12,69 @@ public class Album {
 	int duracaoTotal, quantidadeDeFaixas;
 	Iterator<Musica> it = listaDeMusicas.iterator();
 
-	public Album(String artista, String titulo, int anoLancamento) {
-		super();
+	private String getTitulo() {
+
+		return titulo;
+	}
+
+	private String getArtista() {
+		return artista;
+	}
+
+	private int getAnoLancamento() {
+		return anoLancamento;
+	}
+
+	public Musica getMusica(String titulo) throws Exception {
+
+		Musica aux = null;
+		for (Musica musica : listaDeMusicas) {
+			if (musica.getTitulo().equals(titulo)) {
+				aux = musica;
+			}
+		}
+		return aux;
+	}
+
+	public Album(String artista, String titulo, int anoLancamento) throws Exception {
+		Musica aux = new Musica("Titulo", 1, "genero");
+		listaDeMusicas.add(0, aux);
+
+		artistaInvalido(artista);
 		this.artista = artista;
+		tituloInvalido(titulo);
 		this.titulo = titulo;
+		anoInvalido(anoLancamento);
 		this.anoLancamento = anoLancamento;
 	}
 
+	private void artistaInvalido(String s) throws Exception {
+		if (s == null || s.trim().equals("")) {
+			throw new Exception("Artista do album nao pode ser nulo ou vazio.");
+		}
+
+	}
+
+	private void tituloInvalido(String s) throws Exception {
+		if (s == null || s.trim().equals("")) {
+			throw new Exception("Titulo do album nao pode ser nulo ou vazio.");
+
+		}
+	}
+
+	private void anoInvalido(int ano) throws Exception {
+		if (ano < 1900) {
+			throw new Exception("Ano de lancamento do album nao pode ser inferior a 1900.");
+
+		}
+	}
+
 	public boolean adicionaMusica(Musica m) {
-		if (!listaDeMusicas.contains(m)) {
+	
+		if (m == null) {
+			return false;
+		}
+		else if (!listaDeMusicas.contains(m)) {
 			listaDeMusicas.add(m);
 			return true;
 		}
@@ -45,66 +97,33 @@ public class Album {
 	}
 
 	public int quantidadeFaixas() {
-		return quantidadeDeFaixas = listaDeMusicas.size();
+		return quantidadeDeFaixas = (listaDeMusicas.size()-1);
 
 	}
 
 	public int getDuracaoTotal() {
-		
-		
-		
-		for (int i = 0; i < listaDeMusicas.size(); i++) {
-			duracaoTotal += listaDeMusicas.get(i).getDuracao();
 
-		} 
+		for (Musica musica : listaDeMusicas) {
+
+			duracaoTotal += musica.getDuracao();
+		}
+		duracaoTotal --;
+
 		return duracaoTotal;
 	}
 
 	public void removeMusica(int faixa) {
-		
-		listaDeMusicas.remove((faixa-1));
+
+		listaDeMusicas.remove((faixa));
 
 	}
 
-	public Musica getMusica(String titulo) {
-		Musica m = null;
-		for (int i = 0; i < listaDeMusicas.size(); i++) {
-			if (listaDeMusicas.get(i).getTitulo().equals(titulo)){
-				m = listaDeMusicas.get(i);
-			}
-			
-		}
-		
-		return m;
-	}
-	
-	
-	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+		if (!(obj instanceof Album))
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Album other = (Album) obj;
-		if (anoLancamento != other.anoLancamento)
-			return false;
-		if (artista == null) {
-			if (other.artista != null)
-				return false;
-		} else if (!artista.equals(other.artista))
-			return false;
-		if (titulo == null) {
-			if (other.titulo != null)
-				return false;
-		} else if (!titulo.equals(other.titulo))
-			return false;
-		return true;
+		Album album = (Album) obj;
+		return artista.equals(album.getArtista()) && titulo.equals(getTitulo()) && anoLancamento == getAnoLancamento();
 	}
-
-	
-	
 
 }
