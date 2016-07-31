@@ -5,38 +5,14 @@ import java.util.Iterator;
 
 public class Album {
 
-	String artista;
-	String titulo;
-	int anoLancamento;
-	ArrayList<Musica> listaDeMusicas = new ArrayList<Musica>();
-	int duracaoTotal, quantidadeDeFaixas;
+	private String artista;
+	private String titulo;
+	private int anoDeLancamento;
+	private ArrayList<Musica> listaDeMusicas = new ArrayList<Musica>();
+	private int duracaoTotal, quantidadeDeFaixas;
 	Iterator<Musica> it = listaDeMusicas.iterator();
 
-	private String getTitulo() {
-
-		return titulo;
-	}
-
-	private String getArtista() {
-		return artista;
-	}
-
-	private int getAnoLancamento() {
-		return anoLancamento;
-	}
-
-	public Musica getMusica(String titulo) throws Exception {
-
-		Musica aux = null;
-		for (Musica musica : listaDeMusicas) {
-			if (musica.getTitulo().equals(titulo)) {
-				aux = musica;
-			}
-		}
-		return aux;
-	}
-
-	public Album(String artista, String titulo, int anoLancamento) throws Exception {
+	public Album(String artista, String titulo, int ano) throws Exception {
 		Musica aux = new Musica("Titulo", 1, "genero");
 		listaDeMusicas.add(0, aux);
 
@@ -44,8 +20,8 @@ public class Album {
 		this.artista = artista;
 		tituloInvalido(titulo);
 		this.titulo = titulo;
-		anoInvalido(anoLancamento);
-		this.anoLancamento = anoLancamento;
+		anoInvalido(ano);
+		this.anoDeLancamento = ano;
 	}
 
 	private void artistaInvalido(String s) throws Exception {
@@ -67,6 +43,40 @@ public class Album {
 			throw new Exception("Ano de lancamento do album nao pode ser inferior a 1900.");
 
 		}
+	}
+
+
+	public String getTitulo() {
+
+		return titulo;
+	}
+
+	private String getArtista() {
+		return artista;
+	}
+
+	private int getAnoLancamento() {
+		return anoDeLancamento;
+	}
+	public Musica getMusica(String titulo) throws Exception {
+
+		Musica aux = null;
+		for (Musica musica : listaDeMusicas) {
+			if (musica.getTitulo().equals(titulo)) {
+				aux = musica;
+			}
+		}
+		return aux;
+	}
+
+	public Musica getMusica(int faixa) throws Exception {
+		
+		for (int i = 0; i < listaDeMusicas.size(); i++) {
+			if (listaDeMusicas.get(i).getTitulo().equals(listaDeMusicas.get(faixa).getTitulo())) {
+				return listaDeMusicas.get(i);
+			}
+		}
+		return null;
 	}
 
 	public boolean adicionaMusica(Musica m) {
@@ -123,7 +133,7 @@ public class Album {
 		if (!(obj instanceof Album))
 			return false;
 		Album album = (Album) obj;
-		return artista.equals(album.getArtista()) && titulo.equals(getTitulo()) && anoLancamento == getAnoLancamento();
+		return artista.equals(album.getArtista()) && titulo.equals(getTitulo()) && anoDeLancamento == getAnoLancamento();
 	}
 
 }
