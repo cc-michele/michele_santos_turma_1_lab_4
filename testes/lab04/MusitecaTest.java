@@ -74,7 +74,7 @@ public class MusitecaTest {
 		
 		Assert.assertEquals(1, musiteca.getTamPlaylist("Sertanejo"));
 		// verifica se a playlist Sertanejo tem uma musica com esse nome.
-		Assert.assertTrue(musiteca.contemNaPaylist("Sertanejo", "Sentimento Louco"));
+		Assert.assertTrue(musiteca.contemNaPlaylist("Sertanejo", "Sentimento Louco"));
 	}
 
 	@Test

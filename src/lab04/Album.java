@@ -107,7 +107,8 @@ public class Album {
 	}
 
 	public int quantidadeFaixas() {
-		return quantidadeDeFaixas = (listaDeMusicas.size()-1);
+		quantidadeDeFaixas = listaDeMusicas.size()-1;
+		return quantidadeDeFaixas;
 
 	}
 
